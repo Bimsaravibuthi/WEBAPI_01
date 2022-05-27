@@ -207,6 +207,7 @@ namespace WEBAPI_01.Controllers
         [HttpPost("PostStoredProDataWithPara")]    // Body
         public IActionResult PostStoredProDataWithPara([FromBody] ProData data)
         {
+            int strOut = 0;
             data.strProcedure = "[dbo].[" + data.strProcedure + "]";
 
             if (TokenValidation(data.tkn))
@@ -234,22 +235,22 @@ namespace WEBAPI_01.Controllers
                         }
                         else
                         {
-                            byte[] imageToSave = System.Convert.FromBase64String(objVal[i].ToString());
+                            byte[] imageToSave = Convert.FromBase64String(objVal[i].ToString());
                             SqlParameter sqlParaImage = new SqlParameter(objPara[i].ToString(), SqlDbType.Image);
                             sqlParaImage.Value = imageToSave;
                             command.Parameters.Add(sqlParaImage);
                         }
                     }
-                    int strOut = command.ExecuteNonQuery();
 
+                    strOut = command.ExecuteNonQuery();
                     Connection.Close();
-                }
-                catch(SqlException ex)
-                {
-                    throw ex;
-                }
+            }
+                catch (SqlException ex)
+            {
+                throw ex;
+            }
 
-                return Ok("Record Inserted Successfuly.");
+            return Ok(strOut);
             }
             else
             {
