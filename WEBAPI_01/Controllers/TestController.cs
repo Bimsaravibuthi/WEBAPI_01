@@ -218,8 +218,8 @@ namespace WEBAPI_01.Controllers
                 objPara = data.strParaNames.Split('|');
                 objVal = data.strParaValues.Split('|');
 
-                try
-                {
+                //try
+                //{
                     Connection.Open();
                     adapt = new SqlDataAdapter();
                     command = new SqlCommand(data.strProcedure, Connection)
@@ -244,11 +244,11 @@ namespace WEBAPI_01.Controllers
 
                     strOut = command.ExecuteNonQuery();
                     Connection.Close();
-            }
-                catch (SqlException ex)
-            {
-                throw ex;
-            }
+                //}
+                //catch (SqlException ex)
+                //{
+                //    throw ex;
+                //}
 
             return Ok(strOut);
             }
